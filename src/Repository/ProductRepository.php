@@ -6,6 +6,7 @@ namespace Raketa\BackendTestTask\Repository;
 
 use Doctrine\DBAL\Connection;
 use Raketa\BackendTestTask\Repository\Entity\Product;
+use Exception;
 
 class ProductRepository
 {
