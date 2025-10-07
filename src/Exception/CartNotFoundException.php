@@ -6,8 +6,8 @@ use Exception;
 
 class CartNotFoundException extends Exception
 {
-    public function __construct(string $parameter)
+    public function __construct(string $message)
     {
-        parent::__construct("Cart not found by parameter: $parameter");
+        parent::__construct($message);
     }
 }
