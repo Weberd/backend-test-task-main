@@ -36,11 +36,14 @@ final class ProductRepository
 
     public function getByCategory(string $category): array
     {
+        $rows = $this->connection->fetchAllAssociative(
+            "SELECT uuid, is_active, category, service_type, description, thumbnail, price FROM products WHERE is_active = 1 AND category = ?",
+            [$category]
+        );
+       
         return array_map(
-            static fn (array $row): Product => $this->make($row),
-            $this->connection->fetchAllAssociative(
-                "SELECT * FROM products WHERE is_active = 1 AND category = " . $category,
-            )
+            fn (array $row): Product => $this->make($row),
+            $rows
         );
     }
 
