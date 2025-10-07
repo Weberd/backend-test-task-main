@@ -17,6 +17,9 @@ final class ProductRepository
         $this->connection = $connection;
     }
 
+    /*
+        @throws ProductNotFoundException
+    */ 
     public function getByUuid(string $uuid): Product
     {
         $row = $this->connection->fetchAssociative(
@@ -25,7 +28,7 @@ final class ProductRepository
         );
 
         if (empty($row)) {
-            throw new Exception('Product not found');
+            throw new ProductNotFoundException($uuid);
         }
 
         return $this->make($row);
