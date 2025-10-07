@@ -7,9 +7,9 @@ namespace Raketa\BackendTestTask\Domain;
 final class Cart
 {
     public function __construct(
-        readonly private string $uuid,
-        readonly private Customer $customer,
-        readonly private string $paymentMethod,
+        private readonly string $uuid,
+        private readonly Customer $customer,
+        private readonly string $paymentMethod,
         private array $items,
     ) {
     }
