@@ -22,6 +22,20 @@ final readonly class AddToCartController
     public function __invoke(RequestInterface $request): ResponseInterface
     {
         $rawRequest = json_decode($request->getBody()->getContents(), true);
+            $response = new JsonResponse();
+
+            if ($rawRequest === null || !isset($rawRequest['productUuid'], $rawRequest['quantity'])) {
+                return $response
+                    ->withHeader('Content-Type', 'application/json; charset=utf-8')
+                    ->withStatus(400, 'Invalid request payload');
+            }
+
+            if (!is_int($rawRequest['quantity']) || $rawRequest['quantity'] <= 0) {
+                return $response
+                    ->withHeader('Content-Type', 'application/json; charset=utf-8')
+                    ->withStatus(400, 'Quantity must be a positive integer');            
+            }
+
         $cart = $this->cartManager->addToCart($rawRequest['productUuid'], $rawRequest['quantity']);
 
         $response = new JsonResponse();
