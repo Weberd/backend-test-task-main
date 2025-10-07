@@ -7,7 +7,6 @@ namespace Raketa\BackendTestTask\Controller;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Raketa\BackendTestTask\View\ProductsView;
-use Raketa\BackendTestTask\Exception\ProductNotFoundException;
 use Exception;
 
 final readonly class GetProductsController
