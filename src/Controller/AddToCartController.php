@@ -10,7 +10,7 @@ use Raketa\BackendTestTask\Repository\CartManager;
 use Raketa\BackendTestTask\Repository\ProductRepository;
 use Raketa\BackendTestTask\View\CartView;
 
-readonly class AddToCartController
+final readonly class AddToCartController
 {
     public function __construct(
         private ProductRepository $productRepository,
