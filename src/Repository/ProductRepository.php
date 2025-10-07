@@ -8,7 +8,7 @@ use Doctrine\DBAL\Connection;
 use Raketa\BackendTestTask\Repository\Entity\Product;
 use Exception;
 
-class ProductRepository
+final class ProductRepository
 {
     private Connection $connection;
 
@@ -35,7 +35,7 @@ class ProductRepository
         return array_map(
             static fn (array $row): Product => $this->make($row),
             $this->connection->fetchAllAssociative(
-                "SELECT id FROM products WHERE is_active = 1 AND category = " . $category,
+                "SELECT * FROM products WHERE is_active = 1 AND category = " . $category,
             )
         );
     }
@@ -43,7 +43,6 @@ class ProductRepository
     public function make(array $row): Product
     {
         return new Product(
-            $row['id'],
             $row['uuid'],
             $row['is_active'],
             $row['category'],

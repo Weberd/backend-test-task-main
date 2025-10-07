@@ -7,7 +7,6 @@ namespace Raketa\BackendTestTask\Repository\Entity;
 readonly class Product
 {
     public function __construct(
-        private int $id,
         private string $uuid,
         private bool $isActive,
         private string $category,
@@ -16,11 +15,6 @@ readonly class Product
         private string $thumbnail,
         private float $price,
     ) {
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
     }
 
     public function getUuid(): string

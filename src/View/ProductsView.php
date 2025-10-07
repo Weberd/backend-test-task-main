@@ -16,7 +16,6 @@ readonly class ProductsView
     {
         return array_map(
             fn (Product $product) => [
-                'id' => $product->getId(),
                 'uuid' => $product->getUuid(),
                 'category' => $product->getCategory(),
                 'description' => $product->getDescription(),
