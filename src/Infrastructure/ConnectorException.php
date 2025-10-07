@@ -10,7 +10,8 @@ class ConnectorException implements \Throwable
         private string $message,
         private int $code,
         private ?\Throwable $previous,
-    ) { }
+    ) {
+    }
 
     public function getMessage(): string
     {
