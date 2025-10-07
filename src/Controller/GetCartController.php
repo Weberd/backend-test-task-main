@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Raketa\BackendTestTask\Controller;
 
 use Psr\Http\Message\ResponseInterface;
-use Raketa\BackendTestTask\Repository\CartManager;
+use Raketa\BackendTestTask\Service\CartManager;
 use Raketa\BackendTestTask\View\CartView;
 use Raketa\BackendTestTask\Controller\JsonResponse;
 use Raketa\BackendTestTask\Exception\CartNotFoundException;

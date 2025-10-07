@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Raketa\BackendTestTask\Repository;
+namespace Raketa\BackendTestTask\Service;
 
 use CartRepository;
 use Raketa\BackendTestTask\Domain\Cart;
 use Raketa\BackendTestTask\Domain\CartItem;
 use Ramsey\Uuid\Uuid;
 use Raketa\BackendTestTask\Service\SessionService;
+use Raketa\BackendTestTask\Repository\ProductRepository;
 
 final class CartManager
 {
