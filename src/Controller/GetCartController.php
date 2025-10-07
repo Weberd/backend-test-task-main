@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 use Raketa\BackendTestTask\Repository\CartManager;
 use Raketa\BackendTestTask\View\CartView;
 
-readonly class GetCartController
+final readonly class GetCartController
 {
     public function __construct(
         private CartView $cartView,
