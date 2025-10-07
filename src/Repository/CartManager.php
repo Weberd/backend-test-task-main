@@ -36,17 +36,22 @@ class CartManager extends ConnectorFacade
         }
     }
 
-    /**
-     * @return ?Cart
+    /*
+        @throws ProductNotFoundException
      */
-    public function getCart()
+    public function addToCart(string $productUuid, int $quantity): Cart
     {
-        try {
-            return $this->connector->get(session_id());
-        } catch (Exception $e) {
-            $this->logger->error('Error');
-        }
+        $cart = $this->getCart();
+        $product = $this->productRepository->getByUuid($productUuid);
+        
+        $cart->addItem(new CartItem(
+            Uuid::uuid4()->toString(),
+            $product->getUuid(),
+            $product->getPrice(),
+            $quantity,
+        ));
 
-        return new Cart(session_id(), []);
+        $this->saveCart($cart);
+        return $cart;
     }
 }
