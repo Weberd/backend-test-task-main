@@ -21,6 +21,12 @@ final readonly class GetProductsController
 
         $rawRequest = json_decode($request->getBody()->getContents(), true);
 
+            if ($rawRequest === null || !isset($rawRequest['category'])) {
+                return $response
+                    ->withHeader('Content-Type', 'application/json; charset=utf-8')
+                    ->withStatus(400, 'Missing category parameter');            
+            }
+
         $response->getBody()->write(
             json_encode(
                 $this->productsVew->toArray($rawRequest['category']),
