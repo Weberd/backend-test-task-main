@@ -20,7 +20,7 @@ class CartTransport implements CartTransportInterface
         private string $password,
         private int $dbindex
     ) {
-        $this->build();        
+        $this->build();
     }
 
     protected function build(): void
@@ -29,7 +29,7 @@ class CartTransport implements CartTransportInterface
 
         try {
             $isConnected = $redis->isConnected();
-            
+
             if (! $isConnected && $redis->ping('Pong')) {
                 $isConnected = $redis->connect(
                     $this->host,

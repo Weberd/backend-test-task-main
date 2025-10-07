@@ -1,14 +1,14 @@
 <?php
 
 use Raketa\BackendTestTask\Domain\Cart;
-
 use Raketa\BackendTestTask\Infrastructure\CartTransportInterface;
 
 final class CartRepository
 {
     public function __construct(
         private CartTransportInterface $transport
-    ) {}
+    ) {
+    }
 
     public function get(string $key): Cart
     {

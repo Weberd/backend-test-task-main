@@ -35,12 +35,12 @@ final class CartManager
 
     /*
         @throws ProductNotFoundException
-    */ 
+    */
     public function addToCart(string $productUuid, int $quantity): Cart
     {
         $cart = $this->getCart();
         $product = $this->productRepository->getByUuid($productUuid);
-        
+
         $cart->addItem(new CartItem(
             Uuid::uuid4()->toString(),
             $product->getUuid(),

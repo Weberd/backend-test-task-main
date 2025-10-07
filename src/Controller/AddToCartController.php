@@ -41,7 +41,7 @@ final readonly class AddToCartController
             return $response
                 ->withHeader('Content-Type', 'application/json; charset=utf-8')
                 ->withStatus(200);
-        
+
         } catch (ProductNotFoundException $e) {
             return $response
                 ->withHeader('Content-Type', 'application/json; charset=utf-8')
@@ -49,7 +49,7 @@ final readonly class AddToCartController
         } catch (Exception $e) {
             return $response
                 ->withHeader('Content-Type', 'application/json; charset=utf-8')
-                ->withStatus(500, 'Internal server error');   
+                ->withStatus(500, 'Internal server error');
         }
     }
 }

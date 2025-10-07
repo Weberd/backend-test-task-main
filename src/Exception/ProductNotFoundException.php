@@ -1,6 +1,7 @@
 <?php
 
 namespace Raketa\BackendTestTask\Exception;
+
 use Exception;
 
 class ProductNotFoundException extends Exception

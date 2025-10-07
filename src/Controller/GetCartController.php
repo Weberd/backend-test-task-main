@@ -42,7 +42,7 @@ final readonly class GetCartController
         } catch (Exception $e) {
             return $response
                 ->withHeader('Content-Type', 'application/json; charset=utf-8')
-                ->withStatus(500, 'Internal server error');   
+                ->withStatus(500, 'Internal server error');
         }
     }
 }

@@ -17,7 +17,7 @@ final class ProductRepository
 
     /*
         @throws ProductNotFoundException
-    */ 
+    */
     public function getByUuid(string $uuid): Product
     {
         $row = $this->connection->fetchAssociative(
@@ -38,7 +38,7 @@ final class ProductRepository
             "SELECT uuid, is_active, category, service_type, description, thumbnail, price FROM products WHERE is_active = 1 AND category = ?",
             [$category]
         );
-       
+
         return array_map(
             fn (array $row): Product => $this->make($row),
             $rows
