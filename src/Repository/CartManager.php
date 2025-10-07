@@ -11,7 +11,7 @@ use Raketa\BackendTestTask\Infrastructure\ConnectorFacade;
 
 class CartManager extends ConnectorFacade
 {
-    public $logger;
+    private $logger;
 
     public function __construct($host, $port, $password)
     {
