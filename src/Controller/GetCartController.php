@@ -12,8 +12,8 @@ use Raketa\BackendTestTask\View\CartView;
 readonly class GetCartController
 {
     public function __construct(
-        public CartView $cartView,
-        public CartManager $cartManager
+        private CartView $cartView,
+        private CartManager $cartManager
     ) {
     }
 
