@@ -10,7 +10,6 @@ create table if not exists products
     price decimal(10, 2) not null comment 'Цена',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP comment 'Дата создания',
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'Дата обновления'
-)
-    comment 'Товары';
+) comment 'Товары';
 
 create index is_active_idx on products (is_active);
