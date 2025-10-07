@@ -4,41 +4,37 @@ declare(strict_types=1);
 
 namespace Raketa\BackendTestTask\Repository;
 
-use Exception;
-use Psr\Log\LoggerInterface;
+use CartRepository;
 use Raketa\BackendTestTask\Domain\Cart;
-use Raketa\BackendTestTask\Infrastructure\ConnectorFacade;
+use Raketa\BackendTestTask\Domain\CartItem;
+use Ramsey\Uuid\Uuid;
+use Raketa\BackendTestTask\Service\SessionService;
 
-class CartManager extends ConnectorFacade
+final class CartManager
 {
-    private $logger;
-
-    public function __construct($host, $port, $password)
-    {
-        parent::__construct($host, $port, $password, 1);
-        parent::build();
-    }
-
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
+    public function __construct(
+        private ProductRepository $productRepository,
+        private CartRepository $cartRepository,
+        private SessionService $sessionService,
+    ) {
     }
 
     /**
      * @inheritdoc
      */
-    public function saveCart(Cart $cart)
+    private function saveCart(Cart $cart): void
     {
-        try {
-            $this->connector->set($cart, session_id());
-        } catch (Exception $e) {
-            $this->logger->error('Error');
-        }
+        $this->cartRepository->set($cart, $this->sessionService->getId());
+    }
+
+    public function getCart(): Cart
+    {
+        return $this->cartRepository->get($this->sessionService->getId());
     }
 
     /*
         @throws ProductNotFoundException
-     */
+    */ 
     public function addToCart(string $productUuid, int $quantity): Cart
     {
         $cart = $this->getCart();
