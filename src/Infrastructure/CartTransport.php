@@ -63,7 +63,7 @@ class CartTransport implements CartTransportInterface
 
             return $cart;
         } catch (RedisException $e) {
-            throw new CartTransportException('Connector error', $e->getCode(), $e);
+            throw new CartTransportException('Get error', $e->getCode(), $e);
         }
     }
 
@@ -75,7 +75,7 @@ class CartTransport implements CartTransportInterface
         try {
             $this->redis->setex($key, 24 * 60 * 60, serialize($value));
         } catch (RedisException $e) {
-            throw new CartTransportException('Connector error', $e->getCode(), $e);
+            throw new CartTransportException('Set error', $e->getCode(), $e);
         }
     }
 
@@ -84,7 +84,7 @@ class CartTransport implements CartTransportInterface
         try {
             return (bool)$this->redis->exists($key);
         } catch (RedisException $e) {
-            throw new CartTransportException('Connector error', $e->getCode(), $e);
+            throw new CartTransportException('Has error', $e->getCode(), $e);
         }
     }
 }
