@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Raketa\BackendTestTask\Repository;
 
 use Doctrine\DBAL\Connection;
-use Raketa\BackendTestTask\Repository\Entity\Product;
-use Exception;
+use Raketa\BackendTestTask\Repository\Domain\Product;
+use Raketa\BackendTestTask\Exception\ProductNotFoundException;
 
 final class ProductRepository
 {
