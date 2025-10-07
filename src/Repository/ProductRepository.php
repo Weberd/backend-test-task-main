@@ -10,11 +10,9 @@ use Raketa\BackendTestTask\Exception\ProductNotFoundException;
 
 final class ProductRepository
 {
-    private Connection $connection;
-
-    public function __construct(Connection $connection)
-    {
-        $this->connection = $connection;
+    public function __construct(
+        private Connection $connection
+    ) {
     }
 
     /*
@@ -47,7 +45,7 @@ final class ProductRepository
         );
     }
 
-    public function make(array $row): Product
+    private function make(array $row): Product
     {
         return new Product(
             $row['uuid'],
