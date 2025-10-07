@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Raketa\BackendTestTask\Controller;
 
 use Psr\Http\Message\RequestInterface;
