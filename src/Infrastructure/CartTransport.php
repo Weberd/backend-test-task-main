@@ -6,6 +6,7 @@ namespace Raketa\BackendTestTask\Infrastructure;
 
 use Raketa\BackendTestTask\Domain\Cart;
 use Raketa\BackendTestTask\Exception\CartTransportException;
+use Raketa\BackendTestTask\Exception\CartNotFoundException;
 use Raketa\BackendTestTask\Infrastructure\CartTransportInterface;
 use Redis;
 use RedisException;
@@ -26,24 +27,20 @@ class CartTransport implements CartTransportInterface
     protected function build(): void
     {
         $redis = new Redis();
-
-        try {
-            $isConnected = $redis->isConnected();
-
-            if (! $isConnected && $redis->ping('Pong')) {
-                $isConnected = $redis->connect(
-                    $this->host,
-                    $this->port,
-                );
-            }
-        } catch (RedisException $e) {
-            $isConnected = false;
+        
+        if (!$redis->connect($this->host, $this->port)) {
+            throw new CartTransportException('Failed to connect to Redis');
+        }
+        
+        if (!$redis->auth($this->password)) {
+            throw new CartTransportException('Redis authentication failed');
+        }
+        
+        if (!$redis->select($this->dbindex)) {
+            throw new CartTransportException('Redis select failed');
         }
 
-        if ($isConnected) {
-            $redis->auth($this->password);
-            $redis->select($this->dbindex);
-        }
+        $this->redis = $redis;
     }
 
     /**
@@ -52,7 +49,19 @@ class CartTransport implements CartTransportInterface
     public function get(string $key): Cart
     {
         try {
-            return unserialize($this->redis->get($key));
+            $data = $this->redis->get($key);
+
+            if ($data === false) {
+                throw new CartNotFoundException("Cart not found for key: {$key}");
+            }
+
+            $cart = unserialize($this->redis->get($key), ['allowed_classes' => [Cart::class]]);
+
+            if (!$cart instanceof Cart) {
+                throw new CartTransportException("Invalid cart data for key: {$key}");
+            }
+
+            return $cart;
         } catch (RedisException $e) {
             throw new CartTransportException('Connector error', $e->getCode(), $e);
         }
@@ -70,8 +79,12 @@ class CartTransport implements CartTransportInterface
         }
     }
 
-    public function has($key): bool
+    public function has(string $key): bool
     {
-        return $this->redis->exists($key);
+        try {
+            return (bool)$this->redis->exists($key);
+        } catch (RedisException $e) {
+            throw new CartTransportException('Connector error', $e->getCode(), $e);
+        }
     }
 }
