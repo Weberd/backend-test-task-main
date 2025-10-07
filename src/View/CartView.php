@@ -44,7 +44,7 @@ readonly class CartView
                 'product' => [
                     'id' => $product->getId(),
                     'uuid' => $product->getUuid(),
-                    'name' => $product->getName(),
+                    'service_type' => $product->getServiceType(),
                     'thumbnail' => $product->getThumbnail(),
                     'price' => $product->getPrice(),
                 ],

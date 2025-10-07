@@ -46,7 +46,7 @@ class ProductRepository
             $row['uuid'],
             $row['is_active'],
             $row['category'],
-            $row['name'],
+            $row['service_type'],
             $row['description'],
             $row['thumbnail'],
             $row['price'],

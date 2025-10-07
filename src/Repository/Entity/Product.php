@@ -11,7 +11,7 @@ readonly class Product
         private string $uuid,
         private bool $isActive,
         private string $category,
-        private string $name,
+        private string $serviceType,
         private string $description,
         private string $thumbnail,
         private float $price,
@@ -38,9 +38,9 @@ readonly class Product
         return $this->category;
     }
 
-    public function getName(): string
+    public function getServiceType(): string
     {
-        return $this->name;
+        return $this->serviceType;
     }
 
     public function getDescription(): string
