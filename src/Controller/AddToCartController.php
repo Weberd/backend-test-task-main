@@ -6,11 +6,9 @@ namespace Raketa\BackendTestTask\Controller;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Raketa\BackendTestTask\Domain\CartItem;
 use Raketa\BackendTestTask\Repository\CartManager;
 use Raketa\BackendTestTask\Repository\ProductRepository;
 use Raketa\BackendTestTask\View\CartView;
-use Ramsey\Uuid\Uuid;
 
 readonly class AddToCartController
 {
@@ -21,18 +19,10 @@ readonly class AddToCartController
     ) {
     }
 
-    public function get(RequestInterface $request): ResponseInterface
+    public function __invoke(RequestInterface $request): ResponseInterface
     {
         $rawRequest = json_decode($request->getBody()->getContents(), true);
-        $product = $this->productRepository->getByUuid($rawRequest['productUuid']);
-
-        $cart = $this->cartManager->getCart();
-        $cart->addItem(new CartItem(
-            Uuid::uuid4()->toString(),
-            $product->getUuid(),
-            $product->getPrice(),
-            $rawRequest['quantity'],
-        ));
+        $cart = $this->cartManager->addToCart($rawRequest['productUuid'], $rawRequest['quantity']);
 
         $response = new JsonResponse();
         $response->getBody()->write(
