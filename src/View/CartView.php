@@ -7,7 +7,7 @@ namespace Raketa\BackendTestTask\View;
 use Raketa\BackendTestTask\Domain\Cart;
 use Raketa\BackendTestTask\Repository\ProductRepository;
 
-readonly class CartView
+final readonly class CartView
 {
     public function __construct(
         private ProductRepository $productRepository
