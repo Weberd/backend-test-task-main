@@ -8,14 +8,14 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Raketa\BackendTestTask\View\ProductsView;
 
-readonly class GetProductsController
+final readonly class GetProductsController
 {
     public function __construct(
         private ProductsView $productsVew
     ) {
     }
 
-    public function get(RequestInterface $request): ResponseInterface
+    public function __invoke(RequestInterface $request): ResponseInterface
     {
         $response = new JsonResponse();
 
