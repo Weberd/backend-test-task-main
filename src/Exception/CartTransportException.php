@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Raketa\BackendTestTask\Infrastructure;
+namespace Raketa\BackendTestTask\Exception;
+
 use Exception;
 
-class ConnectorException extends Exception
+class CartTransportException extends Exception
 {
+
     public function __construct(string $message = "", int $code = 0, ?Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
