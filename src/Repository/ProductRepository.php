@@ -19,8 +19,9 @@ final class ProductRepository
 
     public function getByUuid(string $uuid): Product
     {
-        $row = $this->connection->fetchOne(
-            "SELECT * FROM products WHERE uuid = " . $uuid,
+        $row = $this->connection->fetchAssociative(
+            "SELECT uuid, is_active, category, service_type, description, thumbnail, price FROM products WHERE uuid = ?",
+            [$uuid]
         );
 
         if (empty($row)) {
