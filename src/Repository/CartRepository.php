@@ -20,7 +20,7 @@ final class CartRepository
         $this->transport->set($key, $value);
     }
 
-    public function has($key): bool
+    public function has(string $key): bool
     {
         return $this->transport->has($key);
     }
