@@ -12,20 +12,20 @@ use Exception;
 final readonly class GetProductsController
 {
     public function __construct(
-        private ProductsView $productsVew
+        private ProductsView $productsView
     ) {
     }
 
     public function __invoke(RequestInterface $request): ResponseInterface
     {
         $response = new JsonResponse();        
-        
+
         try {
             $rawRequest = json_decode($request->getBody()->getContents(), true);
 
             $response->getBody()->write(
                 json_encode(
-                    $this->productsVew->toArray($rawRequest['category']),
+                    $this->productsView->toArray($rawRequest['category']),
                     JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
                 )
             );
