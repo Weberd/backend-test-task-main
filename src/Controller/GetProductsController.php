@@ -18,8 +18,9 @@ final readonly class GetProductsController
 
     public function __invoke(RequestInterface $request): ResponseInterface
     {
+        $response = new JsonResponse();        
+        
         try {
-            $response = new JsonResponse();
             $rawRequest = json_decode($request->getBody()->getContents(), true);
 
             $response->getBody()->write(

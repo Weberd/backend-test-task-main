@@ -22,9 +22,10 @@ final readonly class AddToCartController
 
     public function __invoke(RequestInterface $request): ResponseInterface
     {
+        $response = new JsonResponse();
+        
         try {
             $rawRequest = json_decode($request->getBody()->getContents(), true);
-            $response = new JsonResponse();
 
             $cart = $this->cartManager->addToCart($rawRequest['productUuid'], $rawRequest['quantity']);
 

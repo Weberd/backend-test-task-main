@@ -21,8 +21,9 @@ final readonly class GetCartController
 
     public function __invoke(): ResponseInterface
     {
+        $response = new JsonResponse();
+        
         try {
-            $response = new JsonResponse();
             $cart = $this->cartManager->getCart();
 
             $response->getBody()->write(
