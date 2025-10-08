@@ -14,18 +14,29 @@ use RedisException;
 class CartTransport implements CartTransportInterface
 {
     private Redis $redis;
+    private bool $isConnected = false;
 
     public function __construct(
         private string $host,
         private int $port,
         private string $password,
         private int $dbindex
-    ) {
-        $this->build();
+    ) {        
+    }
+
+    public function __destruct()
+    {
+        if ($this->isConnected && isset($this->redis)) {
+            $this->redis->close();
+        }
     }
 
     protected function build(): void
     {
+        if ($this->isConnected) {
+            return;
+        }
+
         $redis = new Redis();
         
         if (!$redis->connect($this->host, $this->port)) {
@@ -33,14 +44,17 @@ class CartTransport implements CartTransportInterface
         }
         
         if (!$redis->auth($this->password)) {
+            $redis->close();
             throw new CartTransportException('Redis authentication failed');
         }
         
         if (!$redis->select($this->dbindex)) {
+            $redis->close();
             throw new CartTransportException('Redis select failed');
         }
 
         $this->redis = $redis;
+        $this->isConnected = true;
     }
 
     /**
@@ -49,15 +63,16 @@ class CartTransport implements CartTransportInterface
     public function get(string $key): Cart
     {
         try {
+            $this->build();
             $data = $this->redis->get($key);
 
             if ($data === false) {
                 throw new CartNotFoundException("Cart not found for key: {$key}");
             }
 
-            $cart = unserialize($this->redis->get($key), ['allowed_classes' => [Cart::class]]);
+            $cart = unserialize($data, ['allowed_classes' => [Cart::class]]);
 
-            if (!$cart instanceof Cart) {
+            if ($cart === false || !$cart instanceof Cart) {
                 throw new CartTransportException("Invalid cart data for key: {$key}");
             }
 
@@ -73,6 +88,7 @@ class CartTransport implements CartTransportInterface
     public function set(string $key, Cart $value): void
     {
         try {
+            $this->build();
             $this->redis->setex($key, 24 * 60 * 60, serialize($value));
         } catch (RedisException $e) {
             throw new CartTransportException('Set error', $e->getCode(), $e);
@@ -82,6 +98,7 @@ class CartTransport implements CartTransportInterface
     public function has(string $key): bool
     {
         try {
+            $this->build();
             return (bool)$this->redis->exists($key);
         } catch (RedisException $e) {
             throw new CartTransportException('Has error', $e->getCode(), $e);
