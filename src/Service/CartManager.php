@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Raketa\BackendTestTask\Service;
 
-use CartRepository;
+use Raketa\BackendTestTask\Repository\CartRepository;
 use Raketa\BackendTestTask\Domain\Cart;
 use Raketa\BackendTestTask\Domain\CartItem;
 use Ramsey\Uuid\Uuid;

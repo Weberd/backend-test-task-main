@@ -1,5 +1,7 @@
 <?php
 
+namespace Raketa\BackendTestTask\Repository;
+
 use Raketa\BackendTestTask\Domain\Cart;
 use Raketa\BackendTestTask\Infrastructure\CartTransportInterface;
 
