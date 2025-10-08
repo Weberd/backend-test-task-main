@@ -15,9 +15,9 @@ final class ProductRepository
     ) {
     }
 
-    /*
-        @throws ProductNotFoundException
-    */
+    /**
+     * @throws ProductNotFoundException
+     */
     public function getByUuid(string $uuid): Product
     {
         $row = $this->connection->fetchAssociative(
