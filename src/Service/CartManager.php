@@ -33,9 +33,9 @@ final class CartManager
         return $this->cartRepository->get($this->sessionService->getId());
     }
 
-    /*
-        @throws ProductNotFoundException
-    */
+    /**
+     * @throws ProductNotFoundException
+     */
     public function addToCart(string $productUuid, int $quantity): Cart
     {
         $cart = $this->getCart();
