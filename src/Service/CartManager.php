@@ -20,9 +20,6 @@ final class CartManager
     ) {
     }
 
-    /**
-     * @inheritdoc
-     */
     private function saveCart(Cart $cart): void
     {
         $this->cartRepository->set($cart, $this->sessionService->getId());
